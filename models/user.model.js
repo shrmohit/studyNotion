@@ -17,14 +17,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  confirm: {
-    type: String,
-    required: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
+
   accountType: {
     type: String,
     enum: ['student', 'instractor', 'admin'],
@@ -38,19 +31,19 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: 'course',
+      ref: 'Course',
     },
   ],
   additionalDetails: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
-    ref: 'profile',
+    ref: 'Profile',
   },
   coursesProgress: [
     {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: 'courseprogress',
+      ref: 'Courseprogress',
     },
   ],
 });
