@@ -3,26 +3,56 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    requied: true,
+    required: true,
   },
   lastName: {
     type: String,
-    requied: true,
+    required: true,
   },
   email: {
     type: String,
-    requied: true,
+    required: true,
   },
   password: {
     type: String,
-    requied: true,
+    required: true,
   },
   confirm: {
     type: String,
-    requied: true,
+    required: true,
   },
   phoneNumber: {
     type: String,
-    requied: true,
+    required: true,
   },
+  accountType: {
+    type: String,
+    enum: ['student', 'instractor', 'admin'],
+    required: false,
+  },
+  image: {
+    type: String,
+    required: false,
+  },
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'course',
+    },
+  ],
+  additionalDetails: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: 'profile',
+  },
+  coursesProgress: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'courseprogress',
+    },
+  ],
 });
+
+module.exports = mongoose.model('user', userSchema);
