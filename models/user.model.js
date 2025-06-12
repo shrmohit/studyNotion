@@ -17,11 +17,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   accountType: {
     type: String,
-    enum: ['student', 'instractor', 'admin'],
-    required: false,
+    accountType: {
+      type: String,
+      enum: ['student', 'instructor', 'admin'],
+      required: true,
+    },
   },
   image: {
     type: String,
