@@ -1,8 +1,8 @@
-const userModel = require('../../models/user.model');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+import { userModel } from '../../models/user.model.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   console.log(req.body.accountType);
   const { firstName, lastName, email, password, accountType } = req.body;
   if (!firstName || !lastName || !email || !password || !accountType) {
@@ -39,7 +39,7 @@ exports.register = async (req, res) => {
 };
 
 // login
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password, accountType } = req.body;
   console.log(password);
 
@@ -97,3 +97,17 @@ exports.login = async (req, res) => {
     user,
   });
 };
+
+//logout
+export const logout = (req, res) => {
+  try {
+    res.status(200).cookie('token', '', { maxAge: 0 }).json({
+      message: 'logout Successfully',
+      success: true,
+    });
+  } catch (error) {
+    console.log('logout', error);
+  }
+};
+
+//update

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const tagSchema = mongoose.Schema({
   name: {
@@ -11,9 +11,9 @@ const tagSchema = mongoose.Schema({
   course: [
     {
       type: String,
-      ref: 'subsection',
+      ref: 'Subsection',
     },
   ],
 });
 
-module.exports = mongoose.model('tag', tagSchema);
+export const Tag = mongoose.model('Tag', tagSchema);

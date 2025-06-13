@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const sectionSchema = mongoose.Schema({
   sectionName: {
@@ -8,9 +8,9 @@ const sectionSchema = mongoose.Schema({
   subSection: [
     {
       type: String,
-      ref: 'subsection',
+      ref: 'SubSection',
     },
   ],
 });
 
-module.exports = mongoose.model('section', sectionSchema);
+export const Section = mongoose.model('Section', sectionSchema);

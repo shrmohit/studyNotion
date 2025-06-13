@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const courseSchema = mongoose.Schema({
   courseName: {
@@ -12,7 +12,7 @@ const courseSchema = mongoose.Schema({
   instructor: {
     type: String,
     required: true,
-    ref: 'user',
+    ref: 'User',
   },
   whatYouLearn: {
     type: String,
@@ -27,28 +27,28 @@ const courseSchema = mongoose.Schema({
     {
       type: String,
       required: false,
-      ref: 'ratingsAndReview',
+      ref: 'RatingsAndReview',
     },
   ],
   tag: {
     type: String,
     required: true,
-    ref: 'tag',
+    ref: 'Tag',
   },
   sudentsEnrollment: [
     {
       type: String,
       required: true,
-      ref: 'user',
+      ref: 'User',
     },
   ],
   courseContents: [
     {
       type: String,
 
-      ref: 'section',
+      ref: 'Section',
     },
   ],
 });
 
-module.exports = mongoose.model('course', courseSchema);
+export const Course = mongoose.model('Course', courseSchema);
