@@ -1,3 +1,4 @@
+import { resetPassword } from '../controllers/auth/changePassword.controller.js';
 import {
   register,
   login,
@@ -5,6 +6,7 @@ import {
 } from '../controllers/auth/login.controller.js';
 import { sendOtp, verify } from '../controllers/auth/otp.controller.js';
 import express from 'express';
+import { isAuthentication } from '../middlewares/isAuthentication.js';
 
 const router = express.Router();
 
@@ -16,5 +18,6 @@ router.post('/logout', logout);
 // otp
 router.post('/sendotp', sendOtp);
 router.post('/verify', verify);
+router.post('/resetpassword', isAuthentication, resetPassword);
 
 export default router;
