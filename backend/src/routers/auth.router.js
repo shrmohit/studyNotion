@@ -2,7 +2,7 @@ import {
   changePassword,
   forgetPassword,
   resetPassword,
-} from '../controllers/auth/changePassword.controller.js';
+} from '../controllers/auth/password.controller.js';
 import {
   register,
   login,
