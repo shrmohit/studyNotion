@@ -1,4 +1,8 @@
-import { resetPassword } from '../controllers/auth/changePassword.controller.js';
+import {
+  changePassword,
+  forgetPassword,
+  resetPassword,
+} from '../controllers/auth/changePassword.controller.js';
 import {
   register,
   login,
@@ -18,6 +22,9 @@ router.post('/logout', logout);
 // otp
 router.post('/sendotp', sendOtp);
 router.post('/verify', verify);
-router.post('/resetpassword', isAuthentication, resetPassword);
 
+// password api
+router.post('/changepassword', isAuthentication, changePassword);
+router.post('/resetpassword/:token', isAuthentication, resetPassword);
+router.post('/forgetpassword', isAuthentication, forgetPassword);
 export default router;
