@@ -1,7 +1,8 @@
 import { userModel } from '../../models/user.model.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-export const resetPassword = async (req, res) => {
+export const changePassword = async (req, res) => {
   try {
     const { userId } = req.user;
 
@@ -46,3 +47,66 @@ export const resetPassword = async (req, res) => {
 };
 
 // forget user password
+export const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({
+      message: 'Email required for forget password',
+      success: false,
+    });
+  }
+
+  const user = await userModel.findOne({ email });
+  if (!user) {
+    return res.status(401).json({
+      message: 'User not found',
+      success: false,
+    });
+  }
+
+  const token = await jwt.sign({ email }, process.env.SECRET_KEY, {
+    expiresIn: '2m',
+  });
+
+  res.status(200).json({
+    message: 'token send successfully',
+    success: false,
+    token,
+  });
+};
+
+// reset password
+export const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { resetpassword } = req.body;
+
+  let decode;
+  try {
+    decode = await jwt.verify(token, process.env.SECRET_KEY);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({
+      message: 'Token Invalid ',
+      success: false,
+    });
+  }
+
+  const email = decode.email;
+  const user = await userModel.findOne({ email });
+  if (!user) {
+    return res.status(400).json({
+      message: 'user not found',
+      success: false,
+    });
+  }
+
+  const hashResetPassword = await bcrypt.hash(resetpassword, 10);
+
+  user.password = hashResetPassword;
+  await user.save();
+
+  res.status(201).json({
+    message: 'reset password succcessfully',
+    success: true,
+  });
+};
