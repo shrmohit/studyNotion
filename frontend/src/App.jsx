@@ -1,9 +1,26 @@
-import { Button } from '@/components/ui/button';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './components/Home';
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/signup';
 
 function App() {
+  const appRouter = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />,
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/signup',
+      element: <Signup />,
+    },
+  ]);
   return (
-    <div className='flex min-h-svh flex-col items-center justify-center'>
-      <Button>Click me</Button>
+    <div>
+      <RouterProvider router={appRouter} />
     </div>
   );
 }
