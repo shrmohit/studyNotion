@@ -3,10 +3,24 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import loginImg from '../../assets/image.png';
 import Navbar from '../shared/Navbar';
+import { login } from '../../services/authServices';
 
 function Login() {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleFormData = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    login(formData);
+  };
   const [showPassword, setShowPassword] = useState(false);
-  const [accountType, setAccountType] = useState('student');
 
   return (
     <>
@@ -24,32 +38,11 @@ function Login() {
               </span>
             </p>
 
-            {/* Account Toggle Buttons */}
-            <div className='my-6 flex rounded-full bg-[#161D29] p-1 max-w-max gap-x-1'>
-              <button
-                onClick={() => setAccountType('student')}
-                className={`px-5 py-2 rounded-full text-sm transition-all duration-200 ${
-                  accountType === 'student'
-                    ? ' bg-[#000814] text-richblack-5'
-                    : 'text-richblack-200'
-                }`}
-              >
-                Student
-              </button>
-              <button
-                onClick={() => setAccountType('instructor')}
-                className={`px-5 py-2 rounded-full text-sm transition-all duration-200 ${
-                  accountType === 'instructor'
-                    ? ' bg-[#000814] text-richblack-5'
-                    : 'text-richblack-200'
-                }`}
-              >
-                Instructors
-              </button>
-            </div>
-
             {/* Form */}
-            <form className='flex w-full flex-col gap-y-4'>
+            <form
+              onSubmit={submitHandler}
+              className='flex w-full flex-col gap-y-4'
+            >
               {/* Email */}
               <label className='w-full'>
                 <p className='mb-1 text-sm text-richblack-5 '>
@@ -58,6 +51,9 @@ function Login() {
                 <input
                   required
                   type='email'
+                  name='email'
+                  value={formData?.email}
+                  onChange={handleFormData}
                   placeholder='Enter email address'
                   className='w-full rounded-md  bg-[#161D29] p-3 text-richblack-5'
                 />
@@ -71,6 +67,9 @@ function Login() {
                 <input
                   required
                   type={showPassword ? 'text' : 'password'}
+                  name='password'
+                  value={formData?.password}
+                  onChange={handleFormData}
                   placeholder='Enter Password'
                   className='w-full rounded-md  bg-[#161D29] p-3 pr-12 text-richblack-5'
                 />
@@ -106,7 +105,7 @@ function Login() {
             <img
               src={loginImg} // Replace this with the actual image path
               alt='Student Learning'
-              className='max-w-[500px] rounded-md '
+              className='w-100 h-120 rounded-md '
             />
           </div>
         </div>
