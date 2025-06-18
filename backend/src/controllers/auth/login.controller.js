@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
-  console.log(req.body.accountType);
   const { firstName, lastName, email, password, accountType } = req.body;
   if (!firstName || !lastName || !email || !password || !accountType) {
     return res.status(400).json({
@@ -11,15 +10,15 @@ export const register = async (req, res) => {
       success: false,
     });
   }
-
+  console.log('1');
   let user = await userModel.findOne({ email });
-  if (user) {
+  if (!user) {
     return res.status(400).json({
       message: 'user already exist',
       success: false,
     });
   }
-
+  console.log('2');
   // hash user password
   const hashPassword = await bcrypt.hash(password, 10);
 
@@ -30,7 +29,7 @@ export const register = async (req, res) => {
     accountType,
     password: hashPassword,
   });
-
+  console.log('3');
   return res.status(201).json({
     message: 'user register successful',
     success: true,
@@ -40,10 +39,9 @@ export const register = async (req, res) => {
 
 // login
 export const login = async (req, res) => {
-  const { email, password, accountType } = req.body;
-  console.log(password);
+  const { email, password } = req.body;
 
-  if (!email || !password || !accountType) {
+  if (!email || !password) {
     return res.status(400).json({
       message: 'email and password required',
       success: false,
@@ -57,20 +55,11 @@ export const login = async (req, res) => {
       success: false,
     });
   }
-
+  // match password
   const matchPassword = await bcrypt.compare(password, user.password);
   if (!matchPassword) {
     return res.status(400).json({
       message: 'Invalid Password',
-      success: false,
-    });
-  }
-  // account type
-  console.log(accountType, user);
-
-  if (accountType != user.accountType) {
-    return res.status(400).json({
-      message: 'Invalid accountType',
       success: false,
     });
   }
@@ -110,5 +99,3 @@ export const logout = (req, res) => {
     console.log('logout', error);
   }
 };
-
-//update

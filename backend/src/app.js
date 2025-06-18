@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import userRouter from './routers/auth.router.js';
 import connectdb from './config/database.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -14,6 +15,14 @@ const app = express();
 connectdb();
 
 // Middlewares
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // ✅ Allow requests from frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // ✅ Explicitly allow these methods
+    credentials: true, // ✅ Allow cookies/auth headers
+  })
+);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
