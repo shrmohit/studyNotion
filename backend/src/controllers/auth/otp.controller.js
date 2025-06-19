@@ -1,6 +1,6 @@
 import OTP from '../../models/otp.model.js';
 import bcrypt from 'bcrypt';
-import mailSender from '../../config/mailSender.js';
+import mailSender from '../../config/mailSentWithOtp.js';
 import { OTP_VALIDITY_MIN } from '../../constants/constant.js';
 
 const generateOtp = () =>

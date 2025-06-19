@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
   const { firstName, lastName, email, password, accountType } = req.body;
+  console.log("body", req.body)
   if (!firstName || !lastName || !email || !password || !accountType) {
     return res.status(400).json({
       message: 'all fields required',
@@ -12,7 +13,8 @@ export const register = async (req, res) => {
   }
   console.log('1');
   let user = await userModel.findOne({ email });
-  if (!user) {
+  console.log("user", user)
+  if (user) {
     return res.status(400).json({
       message: 'user already exist',
       success: false,
