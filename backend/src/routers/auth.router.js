@@ -24,7 +24,7 @@ router.post('/sendotp', sendOtp);
 router.post('/verify', verify);
 
 // password api
-router.post('/changepassword', isAuthentication, changePassword);
-router.post('/resetpassword/:token', isAuthentication, resetPassword);
+router.post('/changepassword', changePassword);
+router.post('/resetpassword/:token', resetPassword);
 router.post('/forgetpassword', forgetPassword);
 export default router;

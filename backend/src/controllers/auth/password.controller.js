@@ -49,7 +49,7 @@ export const changePassword = async (req, res) => {
 
 // forget user password
 export const forgetPassword = async (req, res) => {
-  console.log("dnfjds");
+
   const { email } = req.body;
   if (!email) {
     return res.status(400).json({
@@ -71,9 +71,9 @@ export const forgetPassword = async (req, res) => {
   });
 
   try {
-    console.log("mail")
-    await mailSendWithResetPasswordLink(email, `http://localhost:5173/resetPassword/${token}`);
-    console.log("mail success")
+
+    await mailSendWithResetPasswordLink(email, `http://localhost:5173/user/resetpassword/${token}`);
+
     return res.status(200).json({
       message: 'Password reset link has been sent to your email',
       success: true
