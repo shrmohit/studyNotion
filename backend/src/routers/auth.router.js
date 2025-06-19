@@ -7,6 +7,7 @@ import {
   register,
   login,
   logout,
+  getProfile,
 } from '../controllers/auth/login.controller.js';
 import { sendOtp, verify } from '../controllers/auth/otp.controller.js';
 import express from 'express';
@@ -18,6 +19,7 @@ const router = express.Router();
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', logout);
+router.get('/getProfile', isAuthentication, getProfile);
 
 // otp
 router.post('/sendotp', sendOtp);

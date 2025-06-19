@@ -94,10 +94,41 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   try {
     res.status(200).cookie('token', '', { maxAge: 0 }).json({
-      message: 'logout Successfully',
+      message: 'user logout Successfully',
       success: true,
     });
   } catch (error) {
     console.log('logout', error);
   }
 };
+
+// profile 
+export const getProfile = async (req, res) => {
+  try {
+    // auth user
+    let user = req.user;
+    if (!user) {
+      return res.status(400).json({
+        message: "user not found",
+        success: false
+      })
+    }
+    // db user
+    const email = user.email
+    user = await userModel.findOne({ email });
+
+    // respone 
+    return res.status(200).json({
+      message: "User profile fetch Successfully",
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        accountType: user.accountType
+      }
+    })
+  } catch (error) {
+    console.log("profile", error)
+  }
+}
