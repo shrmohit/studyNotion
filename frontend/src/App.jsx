@@ -4,8 +4,12 @@ import Login from './components/Auth/Login';
 import ForgotPassword from "./components/Auth/ForgotPassword"
 import Register from './components/Auth/Register';
 import ResetPassword from './components/Auth/ResetPassword';
+import { useAuth } from './components/contexts/AuthContext';
 
 function App() {
+
+  const {isLoggedIn, user, checking} = useAuth();
+
   const appRouter = createBrowserRouter([
     {
       path: '/',
@@ -30,8 +34,16 @@ function App() {
     },
   ]);
   return (
+
+    
     <div  className='bg-[#000814] min-h-screen'>
+      {
+        checking && <p className='text-white' >Loding</p>
+      }
+      {
+        !checking &&
       <RouterProvider router={appRouter} />
+    }
     </div>
   );
 }

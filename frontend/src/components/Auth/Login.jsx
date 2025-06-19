@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import loginImg from '../../assets/image.png';
 import Navbar from '../shared/Navbar';
 import { login } from '../../services/authServices';
+import { useAuth } from '../contexts/AuthContext';
 
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const {setUser} = useAuth();
 
   const handleFormData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,7 +21,10 @@ function Login() {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData);
-    login(formData);
+    login(formData).then((res) => {
+      setUser(res.user);
+      
+    })
   };
   const [showPassword, setShowPassword] = useState(false);
 
