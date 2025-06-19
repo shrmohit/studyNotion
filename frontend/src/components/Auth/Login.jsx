@@ -83,7 +83,7 @@ function Login() {
                     <AiOutlineEye size={20} />
                   )}
                 </span>
-                <Link to='/forgot-password'>
+                <Link to='/forgetpassword'>
                   <p className='mt-1 text-right text-xs text-blue-300'>
                     Forgot password
                   </p>

@@ -4,13 +4,7 @@ import { AUTH_ENDPOINTS } from './apiEndPoint.js';
 
 export const login = async (formData) => {
   try {
-    const response = await apiConnector.post(AUTH_ENDPOINTS.LOGIN, formData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      withCredentials: true,
-    });
+    const response = await apiConnector.post(AUTH_ENDPOINTS.LOGIN, formData);
     if (response.data.success) {
       toast.success('Login successful');
     }
@@ -26,16 +20,10 @@ export const register = async (formData) => {
   try {
     const response = await apiConnector.post(
       AUTH_ENDPOINTS.REGISTER,
-      formData,
-      {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }
+      formData
     );
 
-    if (response.data.success) {
-      toast.success(response.data.message);
-    }
+    toast.success(response.data.message);
 
     return response.data;
   } catch (error) {
@@ -44,6 +32,28 @@ export const register = async (formData) => {
     const message =
       error.response?.data?.message ||
       'Something went wrong during registration';
+
+    toast.error(message);
+  }
+};
+
+export const forgotPassword = async (formData) => {
+  try {
+    console.log("forgot")
+    const response = await apiConnector.post(
+      AUTH_ENDPOINTS.FORGOT_PASSWORD,
+      formData
+    );
+
+    console.log(response.data);
+    toast.success(response.data.message);
+
+    return response.data;
+  } catch (error) {
+    console.log("123error ", error);
+    const message =
+      error.response?.data?.message ||
+      'Something went wrong during forgot password';
 
     toast.error(message);
   }
