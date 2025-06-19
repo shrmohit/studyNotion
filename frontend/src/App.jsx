@@ -3,6 +3,7 @@ import Home from './components/Home';
 import Login from './components/Auth/Login';
 import ForgotPassword from "./components/Auth/ForgotPassword"
 import Register from './components/Auth/Register';
+import ResetPassword from './components/Auth/ResetPassword';
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
      {
       path: '/forgetpassword',
       element: <ForgotPassword />,
+    },
+     {
+      path: '/user/resetpassword/:token',
+      element: <ResetPassword />,
     },
   ]);
   return (

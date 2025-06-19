@@ -50,7 +50,7 @@ export const forgotPassword = async (formData) => {
 
     return response.data;
   } catch (error) {
-    console.log("123error ", error);
+
     const message =
       error.response?.data?.message ||
       'Something went wrong during forgot password';
@@ -58,3 +58,21 @@ export const forgotPassword = async (formData) => {
     toast.error(message);
   }
 };
+
+
+export const resetPassword = async (formData, token) => {
+  console.log(formData, token)
+  try {
+    console.log(formData)
+    const response = await apiConnector.post(AUTH_ENDPOINTS.RESET_PASSWORD + `/${token}`, formData);
+    console.log(response.data)
+    toast.success(response.data.message)
+    return response.data
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      'Something went wrong during forgot password';
+
+    toast.error(message);
+  }
+}
