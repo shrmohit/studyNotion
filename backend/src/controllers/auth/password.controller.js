@@ -1,6 +1,7 @@
 import { userModel } from '../../models/user.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { mailSendWithResetPasswordLink } from '../../config/mailSendWithResetPasswordLink.js';
 
 export const changePassword = async (req, res) => {
   try {
@@ -48,6 +49,7 @@ export const changePassword = async (req, res) => {
 
 // forget user password
 export const forgetPassword = async (req, res) => {
+  console.log("dnfjds");
   const { email } = req.body;
   if (!email) {
     return res.status(400).json({
@@ -65,14 +67,24 @@ export const forgetPassword = async (req, res) => {
   }
 
   const token = await jwt.sign({ email }, process.env.SECRET_KEY, {
-    expiresIn: '2m',
+    expiresIn: '10m',
   });
 
-  res.status(200).json({
-    message: 'token send successfully',
-    success: false,
-    token,
-  });
+  try {
+    console.log("mail")
+    await mailSendWithResetPasswordLink(email, `http://localhost:5173/resetPassword/${token}`);
+    console.log("mail success")
+    return res.status(200).json({
+      message: 'Password reset link has been sent to your email',
+      success: true
+    })
+  } catch (error) {
+    console.log("mail errorr")
+    return res.status(500).json({
+      message: 'Internal server error, please try again later',
+      success: false
+    })
+  }
 };
 
 // reset password
