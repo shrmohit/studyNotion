@@ -3,8 +3,12 @@ import { IoCartOutline } from 'react-icons/io5';
 import { Button } from '../ui/button';
 import Subtract from '../../assets/Subtract.png';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function Navbar() {
+
+  const {isLoggedIn, user} = useAuth();
+
   return (
     <div className='w-full px-10 py-4 bg-[#161D29] text-white'>
       <div className='flex  items-center justify-between '>
@@ -30,7 +34,19 @@ function Navbar() {
             <IoCartOutline className='size-6' />
           </div>
           <div className='flex space-x-3'>
-            <Button
+            {
+              isLoggedIn && 
+               <Button
+              variant='outline'
+              className=' text-white bg-[#1a212b] border-2 hover:border-black'
+            >
+             logout
+            </Button>
+            }
+            {
+              !isLoggedIn && ( 
+              <>
+               <Button
               variant='outline'
               className=' text-white bg-[#1a212b] border-2'
             >
@@ -42,6 +58,11 @@ function Navbar() {
             >
               <Link to='/signup'>Sign up</Link>
             </Button>
+              </>
+             )
+            }
+           
+           
           </div>
         </div>
       </div>

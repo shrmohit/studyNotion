@@ -61,17 +61,50 @@ export const forgotPassword = async (formData) => {
 
 
 export const resetPassword = async (formData, token) => {
-  console.log(formData, token)
+
   try {
-    console.log(formData)
+
     const response = await apiConnector.post(AUTH_ENDPOINTS.RESET_PASSWORD + `/${token}`, formData);
-    console.log(response.data)
+
     toast.success(response.data.message)
     return response.data
   } catch (error) {
     const message =
       error.response?.data?.message ||
       'Something went wrong during forgot password';
+
+    toast.error(message);
+  }
+}
+
+//logout
+export const logout = async () => {
+  try {
+    const response = await apiConnector.post(AUTH_ENDPOINTS.LOGOUT);
+    if (response.data.success) {
+      toast.success('Logout successful');
+    }
+
+    return response.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message || 'Logout failed');
+    throw error
+  }
+}
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const getProfile = async () => {
+
+  try {
+    await delay(3000);
+    const response = await apiConnector.get(AUTH_ENDPOINTS.USER_PROFILE);
+    toast.success(response.data.message)
+    return response.data
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      'Something went wrong during profile';
 
     toast.error(message);
   }
